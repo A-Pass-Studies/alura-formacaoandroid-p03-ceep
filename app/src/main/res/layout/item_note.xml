@@ -21,7 +21,7 @@
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="@tools:sample/lorem" />
+            tools:text="@sample/notes.json/data/title" />
 
         <TextView
             android:id="@+id/item_note_description_tv"
@@ -36,7 +36,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@id/item_note_title_tv"
             app:layout_constraintTop_toBottomOf="@id/item_note_title_tv"
-            tools:text="@tools:sample/lorem/random" />
+            tools:text="@sample/notes.json/data/description" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

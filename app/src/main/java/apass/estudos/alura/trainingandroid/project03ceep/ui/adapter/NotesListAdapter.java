@@ -41,7 +41,7 @@ public final class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapte
         return notes.size();
     }
 
-    final class NotesViewHolder extends RecyclerView.ViewHolder {
+    static class NotesViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView titleTv, descriptionTv;
 
