@@ -5,14 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ListView
-        android:id="@+id/activity_note_list_lv"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/activity_note_list_rc"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/activity_note_list_insert_note_tv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/item_note" />
 
     <View android:id="@+id/activity_note_list_bottom_gradient_background_vw"

@@ -5,6 +5,8 @@ import android.widget.ListView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import apass.estudos.alura.trainingandroid.project03ceep.R;
 import apass.estudos.alura.trainingandroid.project03ceep.dao.NoteDao;
@@ -21,7 +23,7 @@ public class NotesListActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_note_list);
 
-        ListView notesLv = findViewById(R.id.activity_note_list_lv);
+        RecyclerView notesLv = findViewById(R.id.activity_note_list_rc);
         notesLv.setAdapter(new NotesListAdapter(this, noteDao.all()));
     }
 }
