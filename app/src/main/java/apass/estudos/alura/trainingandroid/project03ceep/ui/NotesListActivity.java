@@ -1,5 +1,9 @@
 package apass.estudos.alura.trainingandroid.project03ceep.ui;
 
+import static apass.estudos.alura.trainingandroid.project03ceep.ui.CreateNoteActivity.INTENT_EXTRA_KEY_NEW_NOTE;
+import static apass.estudos.alura.trainingandroid.project03ceep.ui.CreateNoteActivity.REQUEST_CODE_NEW_NOTE;
+import static apass.estudos.alura.trainingandroid.project03ceep.ui.CreateNoteActivity.RESULT_CODE_NEW_NOTE_SUCCESS;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -36,8 +40,8 @@ public final class NotesListActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == 0x100 && resultCode == 0x100 && data != null && data.hasExtra(CreateNoteActivity.INTENT_EXTRA_KEY_NEW_NOTE)) {
-            final Note note = (Note) data.getSerializableExtra(CreateNoteActivity.INTENT_EXTRA_KEY_NEW_NOTE);
+        if (requestCode == REQUEST_CODE_NEW_NOTE && resultCode == RESULT_CODE_NEW_NOTE_SUCCESS && data != null && data.hasExtra(INTENT_EXTRA_KEY_NEW_NOTE)) {
+            final Note note = (Note) data.getSerializableExtra(INTENT_EXTRA_KEY_NEW_NOTE);
             if (note != null) {
                 noteDao.insert(note);
                 notesAdapter.add(note);
@@ -55,7 +59,7 @@ public final class NotesListActivity extends AppCompatActivity {
     private void configureInsertNoteAction() {
         findViewById(R.id.activity_note_list_insert_note_tv).setOnClickListener(v -> {
             final Intent intent = new Intent(NotesListActivity.this, CreateNoteActivity.class);
-            startActivityForResult(intent, 0x100);
+            startActivityForResult(intent, REQUEST_CODE_NEW_NOTE);
         });
     }
 }
