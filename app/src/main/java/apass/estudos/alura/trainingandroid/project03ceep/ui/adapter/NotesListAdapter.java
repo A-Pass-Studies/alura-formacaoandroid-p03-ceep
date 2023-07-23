@@ -41,6 +41,11 @@ public final class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapte
         return notes.size();
     }
 
+    public void add(Note note) {
+        notes.add(note);
+        notifyDataSetChanged();
+    }
+
     static class NotesViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView titleTv, descriptionTv;

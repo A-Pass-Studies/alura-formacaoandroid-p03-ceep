@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">Project 03 - Ceep</string>
+    <string name="actionbar_title_note_list">Anotações</string>
+    <string name="actionbar_title_create_note">Nova anotação</string>
     <string name="insert_note">Inserir uma nota</string>
+    <string name="title_activity_create_note">CreateNoteActivity</string>
+    <string name="title_hint">Título</string>
+    <string name="description_hint">Descrição</string>
+    <string name="menu_save">Salvar</string>
+    <string name="create_note_save_result">Nota salva</string>
 </resources>

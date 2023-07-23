@@ -9,11 +9,13 @@
         android:id="@+id/activity_note_list_rc"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/activity_note_list_insert_note_tv"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintVertical_bias="0.0"
         tools:listitem="@layout/item_note" />
 
     <View android:id="@+id/activity_note_list_bottom_gradient_background_vw"
