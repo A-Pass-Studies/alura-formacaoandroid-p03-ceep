@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/activity_create_note_title_et"
+        android:id="@+id/activity_note_form_title_et"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/activity_create_note_description_et"
+        android:id="@+id/activity_note_form_description_et"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
@@ -27,8 +27,8 @@
         android:gravity="top"
         android:hint="@string/description_hint"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/activity_create_note_title_et"
-        app:layout_constraintStart_toStartOf="@id/activity_create_note_title_et"
-        app:layout_constraintTop_toBottomOf="@id/activity_create_note_title_et" />
+        app:layout_constraintEnd_toEndOf="@id/activity_note_form_title_et"
+        app:layout_constraintStart_toStartOf="@id/activity_note_form_title_et"
+        app:layout_constraintTop_toBottomOf="@id/activity_note_form_title_et" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

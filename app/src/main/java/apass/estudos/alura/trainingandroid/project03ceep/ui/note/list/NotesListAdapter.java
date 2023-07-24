@@ -1,4 +1,4 @@
-package apass.estudos.alura.trainingandroid.project03ceep.ui.adapter;
+package apass.estudos.alura.trainingandroid.project03ceep.ui.note.list;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -19,9 +21,12 @@ public final class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapte
     private final Context context;
     private final List<Note> notes;
 
-    public NotesListAdapter(@NonNull Context context, @NonNull List<Note> notes) {
+    private final OnNoteClickListener onNoteClickListener;
+
+    public NotesListAdapter(@NonNull Context context, @NonNull List<Note> notes, OnNoteClickListener onNoteClickListener) {
         this.context = context;
         this.notes = notes;
+        this.onNoteClickListener = onNoteClickListener;
     }
 
     @NonNull
@@ -33,7 +38,7 @@ public final class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapte
 
     @Override
     public void onBindViewHolder(@NonNull NotesViewHolder holder, int position) {
-        holder.bind(notes.get(position));
+        holder.bind(notes.get(position), position);
     }
 
     @Override
@@ -41,24 +46,38 @@ public final class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapte
         return notes.size();
     }
 
-    public void add(Note note) {
+    public void insert(@NotNull final Note note) {
+        int position = getItemCount();
         notes.add(note);
-        notifyDataSetChanged();
+        notifyItemInserted(position);
     }
 
-    static class NotesViewHolder extends RecyclerView.ViewHolder {
+    public void update(final int position, @NotNull final Note note) {
+        notes.add(position, note);
+        notes.remove(position + 1);
+        notifyItemChanged(position);
+    }
+
+    class NotesViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView titleTv, descriptionTv;
 
-        NotesViewHolder(View view) {
+        private Note note;
+        private int position;
+
+        NotesViewHolder(final View view) {
             super(view);
             titleTv = view.findViewById(R.id.item_note_title_tv);
             descriptionTv = view.findViewById(R.id.item_note_description_tv);
+            view.setOnClickListener(v -> onNoteClickListener.OnNoteClick(note, position));
         }
 
-        void bind(@NonNull Note note) {
-            titleTv.setText(note.getTitle());
-            descriptionTv.setText(note.getDescription());
+        void bind(@NonNull final Note note, final int position) {
+            this.note = note;
+            this.position = position;
+
+            titleTv.setText(this.note.getTitle());
+            descriptionTv.setText(this.note.getDescription());
         }
     }
 }

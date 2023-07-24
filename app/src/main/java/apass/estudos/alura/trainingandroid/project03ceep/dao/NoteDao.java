@@ -19,7 +19,7 @@ public class NoteDao {
         NoteDao.notes.addAll(Arrays.asList(note));
     }
 
-    public void altera(int position, Note note) {
+    public void update(int position, Note note) {
         notes.set(position, note);
     }
 
@@ -36,8 +36,9 @@ public class NoteDao {
     }
 
     public void mock() {
-        for (Integer i = 0; i < 2; i++) {
-            insert(new Note("Nota de número " + i, "Descrição" + i + " descrição" + i + " descrição " + i));
+        for (Integer i = 0; i < 10; i++) {
+            int n = i + 1;
+            insert(new Note("Nota de número " + n, "Descrição" + n + " descrição" + n + " descrição " + n));
         }
     }
 }
