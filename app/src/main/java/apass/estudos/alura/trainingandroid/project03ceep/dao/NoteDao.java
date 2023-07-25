@@ -12,7 +12,7 @@ public class NoteDao {
     private final static ArrayList<Note> notes = new ArrayList<>();
 
     public List<Note> all() {
-        return (List<Note>) notes.clone();
+        return new ArrayList<>(notes);
     }
 
     public void insert(Note... note) {

@@ -4,7 +4,6 @@ import static apass.estudos.alura.trainingandroid.project03ceep.ui.note.NoteForm
 import static apass.estudos.alura.trainingandroid.project03ceep.ui.note.NoteFormActivity.REQUEST_CODE_EDIT_NOTE;
 import static apass.estudos.alura.trainingandroid.project03ceep.ui.note.NoteFormActivity.REQUEST_CODE_NEW_NOTE;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -12,11 +11,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Optional;
 
 import apass.estudos.alura.trainingandroid.project03ceep.R;
 import apass.estudos.alura.trainingandroid.project03ceep.dao.NoteDao;
@@ -47,37 +45,28 @@ public final class NotesListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setTitle(getString(R.string.actionbar_title_note_list));
         setContentView(R.layout.activity_note_list);
-        onCreateConfigureRecyclerView();
+        configureRecyclerView();
         configureInsertNoteAction();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        switch (requestCode) {
-            case REQUEST_CODE_NEW_NOTE:
-                handleNewNoteResult(resultCode, data);
-                break;
-            case REQUEST_CODE_EDIT_NOTE:
-                handleEditNoteResult(resultCode, data);
-                break;
+        if (data != null && data.hasExtra(INTENT_EXTRA_KEY_NOTE)) {
+            final NoteVO noteVo = data.getParcelableExtra(INTENT_EXTRA_KEY_NOTE);
+            if (noteVo != null) {
+                if (resultCode == RESULT_OK) {
+                    switch (requestCode) {
+                        case REQUEST_CODE_NEW_NOTE:
+                            insertNote(noteVo);
+                            break;
+                        case REQUEST_CODE_EDIT_NOTE:
+                            updateNote(noteVo);
+                            break;
+                    }
+                }
+            }
         }
         super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    private void handleNewNoteResult(final int resultCode, final Intent data) {
-        if (resultCode == RESULT_OK) {
-            if (data.hasExtra(INTENT_EXTRA_KEY_NOTE)) {
-                Optional.ofNullable((NoteVO) data.getParcelableExtra(INTENT_EXTRA_KEY_NOTE)).ifPresent(this::insertNote);
-            }
-        }
-    }
-
-    private void handleEditNoteResult(final int resultCode, final Intent data) {
-        if (resultCode == Activity.RESULT_OK) {
-            if (data.hasExtra(INTENT_EXTRA_KEY_NOTE)) {
-                Optional.ofNullable((NoteVO) data.getParcelableExtra(INTENT_EXTRA_KEY_NOTE)).ifPresent(this::updateNote);
-            }
-        }
     }
 
     private void insertNote(@NonNull final NoteVO noteVo) {
@@ -87,14 +76,22 @@ public final class NotesListActivity extends AppCompatActivity {
     }
 
     private void updateNote(@NonNull final NoteVO noteVo) {
-        noteDao.update(noteVo.getPosition(), noteVo.getNote());
-        notesAdapter.update(noteVo.getPosition(), noteVo.getNote());
-        Toast.makeText(this, R.string.edit_note_save_result, Toast.LENGTH_SHORT).show();
+        if(noteVo.isValidPosition()) {
+            noteDao.update(noteVo.getPosition(), noteVo.getNote());
+            notesAdapter.update(noteVo.getPosition(), noteVo.getNote());
+            Toast.makeText(this, R.string.edit_note_save_result, Toast.LENGTH_SHORT).show();
+        }
     }
 
-    public void onCreateConfigureRecyclerView() {
-        final RecyclerView notesLv = findViewById(R.id.activity_note_list_rc);
-        notesLv.setAdapter(notesAdapter);
+    private void removeNote(final int position) {
+        noteDao.remove(position);
+        notesAdapter.remove(position);
+    }
+
+    public void configureRecyclerView() {
+        final RecyclerView notesRv = findViewById(R.id.activity_note_list_rv);
+        notesRv.setAdapter(notesAdapter);
+        new ItemTouchHelper(new NoteItemTouchCallback(this::removeNote)).attachToRecyclerView(notesRv);
     }
 
     private void configureInsertNoteAction() {

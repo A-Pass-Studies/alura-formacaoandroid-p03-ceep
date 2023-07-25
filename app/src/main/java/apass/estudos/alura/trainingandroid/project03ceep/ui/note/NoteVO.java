@@ -32,16 +32,21 @@ public class NoteVO implements Parcelable {
 
     public NoteVO(@NonNull Note note, int position) {
         this.note = note;
-        this.position = position;
+        if(isValidPosition(position)) this.position = position;
+        else throw new IllegalArgumentException("The value of the position must be equal to or greater than zero");
     }
 
-    private NoteVO(Parcel p) {
+    private NoteVO(@NonNull Parcel p) {
         note = new Note(p.readString(), p.readString());
         position = p.readInt();
     }
 
-    public boolean isValidPosition() {
+    private boolean isValidPosition(final int position) {
         return position > -1;
+    }
+
+    public boolean isValidPosition() {
+        return isValidPosition(position);
     }
 
     @Override
