@@ -88,10 +88,15 @@ public final class NotesListActivity extends AppCompatActivity {
         notesAdapter.remove(position);
     }
 
+    private void moveNote(final int currentPosition, final int targetPosition) {
+        noteDao.toggle(currentPosition, targetPosition);
+        notesAdapter.toggle(currentPosition, targetPosition);
+    }
+
     public void configureRecyclerView() {
         final RecyclerView notesRv = findViewById(R.id.activity_note_list_rv);
         notesRv.setAdapter(notesAdapter);
-        new ItemTouchHelper(new NoteItemTouchCallback(this::removeNote)).attachToRecyclerView(notesRv);
+        new ItemTouchHelper(new NoteItemTouchCallback(this::removeNote, this::moveNote)).attachToRecyclerView(notesRv);
     }
 
     private void configureInsertNoteAction() {

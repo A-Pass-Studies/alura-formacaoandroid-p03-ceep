@@ -27,11 +27,13 @@ public class NoteVO implements Parcelable {
     private final int position;
 
     public NoteVO(@NonNull Note note) {
-        this(note, INITIAL_INVALID_POSITION);
+        this.note = note;
+        this.position = INITIAL_INVALID_POSITION;
     }
 
     public NoteVO(@NonNull Note note, int position) {
         this.note = note;
+
         if(isValidPosition(position)) this.position = position;
         else throw new IllegalArgumentException("The value of the position must be equal to or greater than zero");
     }

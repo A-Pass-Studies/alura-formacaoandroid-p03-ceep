@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
 import java.util.List;
 
 import apass.estudos.alura.trainingandroid.project03ceep.R;
@@ -63,23 +64,26 @@ public final class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapte
         notifyItemRemoved(position);
     }
 
+    public void toggle(final int currentPosition, final int targetPosition) {
+        Collections.swap(notes, currentPosition, targetPosition);
+        notifyItemMoved(currentPosition, targetPosition);
+    }
+
     class NotesViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView titleTv, descriptionTv;
 
         private Note note;
-        private int position;
 
         NotesViewHolder(final View view) {
             super(view);
             titleTv = view.findViewById(R.id.item_note_title_tv);
             descriptionTv = view.findViewById(R.id.item_note_description_tv);
-            view.setOnClickListener(v -> onNoteClickListener.OnNoteClick(note, position));
+            view.setOnClickListener(v -> onNoteClickListener.OnNoteClick(note, getAbsoluteAdapterPosition()));
         }
 
         void bind(@NonNull final Note note, final int position) {
             this.note = note;
-            this.position = position;
 
             titleTv.setText(this.note.getTitle());
             descriptionTv.setText(this.note.getDescription());
