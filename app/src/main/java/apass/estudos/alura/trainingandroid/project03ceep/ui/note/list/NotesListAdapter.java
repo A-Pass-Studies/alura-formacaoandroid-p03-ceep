@@ -39,7 +39,7 @@ public final class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapte
 
     @Override
     public void onBindViewHolder(@NonNull NotesViewHolder holder, int position) {
-        holder.bind(notes.get(position), position);
+        holder.bind(notes.get(position));
     }
 
     @Override
@@ -82,7 +82,7 @@ public final class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapte
             view.setOnClickListener(v -> onNoteClickListener.OnNoteClick(note, getAbsoluteAdapterPosition()));
         }
 
-        void bind(@NonNull final Note note, final int position) {
+        void bind(@NonNull final Note note) {
             this.note = note;
 
             titleTv.setText(this.note.getTitle());

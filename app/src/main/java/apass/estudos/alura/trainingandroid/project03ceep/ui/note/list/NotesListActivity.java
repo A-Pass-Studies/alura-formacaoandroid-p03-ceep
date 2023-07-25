@@ -27,13 +27,7 @@ public final class NotesListActivity extends AppCompatActivity {
     @NotNull
     private final NoteDao noteDao = new NoteDao();
     @NonNull
-    private final NotesListAdapter notesAdapter;
-
-    public NotesListActivity() {
-        super();
-        noteDao.mock();
-        notesAdapter = new NotesListAdapter(this, noteDao.all(), this::onNoteClick);
-    }
+    private final NotesListAdapter notesAdapter = new NotesListAdapter(this, noteDao.all(), this::onNoteClick);
 
     private void onNoteClick(final Note note, final int position) {
         Intent intent = new Intent(this, NoteFormActivity.class).putExtra(INTENT_EXTRA_KEY_NOTE, new NoteVO(note, position));

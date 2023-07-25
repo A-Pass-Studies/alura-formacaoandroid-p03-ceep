@@ -36,7 +36,7 @@ public class NoteDao {
     }
 
     public void mock() {
-        for (Integer i = 0; i < 10; i++) {
+        for (int i = 0; i < 10; i++) {
             int n = i + 1;
             insert(new Note("Nota de número " + n, "Descrição" + n + " descrição" + n + " descrição " + n));
         }
